@@ -4,8 +4,14 @@ comments: true
 title:  "A Recipe for Training Neural Networks"
 excerpt: "A collection of practical advice for the process of achieving strong results with neural networks."
 date:   2019-04-25 9:00:00
-mathjax: false
+mathjax: true
 ---
+
+Test $x=0$
+# H1
+## H2
+###  H3
+
 
 Some few weeks ago I [posted](https://twitter.com/karpathy/status/1013244313327681536?lang=en) a tweet on "the most common neural net mistakes", listing a few common gotchas related to training neural nets. The tweet got quite a bit more engagement than I anticipated (including a [webinar](https://www.bigmarker.com/missinglink-ai/PyTorch-Code-to-Unpack-Andrej-Karpathy-s-6-Most-Common-NN-Mistakes) :)). Clearly, a lot of people have personally encountered the large gap between "here is how a convolutional layer works" and "our convnet achieves state of the art results".
 
