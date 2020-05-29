@@ -1,1 +1,20 @@
-theme: jekyll-theme-cayman
+# theme: jekyll-theme-cayman
+
+# Site settings
+title: Marc Dumon blog
+email: 
+description: "Musings of a ...."
+baseurl: ""
+url: "http://marcdumon.github.io"
+twitter_username: marcdumon
+github_username:  marcdumon
+
+# Build settings
+markdown: kramdown
+permalink: pretty
+
+highlighter: rouge
+kramdown:
+  input: GFM
+  auto_ids: true
+  syntax_highlighter: rouge
