@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: page
 comments: true
 title:  "A Recipe for Training Neural Networks"
 excerpt: "A collection of practical advice for the process of achieving strong results with neural networks."
