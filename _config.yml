@@ -2,7 +2,7 @@
 
 # Site settings
 title: Marc Dumon blog
-email: 
+email: dumon.marc@gmail.com
 description: "Musings of a ...."
 baseurl: ""
 url: "http://marcdumon.github.io"
@@ -10,6 +10,7 @@ twitter_username: marcdumon
 github_username:  marcdumon
 
 # Build settings
+future: true
 markdown: kramdown
 permalink: pretty
 
