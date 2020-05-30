@@ -10,6 +10,12 @@ date:   2014-07-02 17:22:24
 
 I was recently looking into various ways of embedding unlabeled, high-dimensional data in 2 dimensions for visualization. A wide variety of methods have been proposed for this task. [This Review paper](http://homepage.tudelft.nl/19j49/Matlab_Toolbox_for_Dimensionality_Reduction_files/TR_Dimensiereductie.pdf) from 2009 contains nice references to many of them (PCA, Kernel PCA, Isomap, LLE, Autoencoders, etc.). If you have Matlab available, the [Dimensionality Reduction Toolbox](http://homepage.tudelft.nl/19j49/Matlab_Toolbox_for_Dimensionality_Reduction.html) has a nice implementation of many of these methods. Scikit Learn also has a brief section on [Manifold Learning](http://scikit-learn.org/stable/modules/manifold.html) along with the implementation.
 
+```python
+for i in range(100):
+        print(i)
+```
+
+
 Among these algorithms, t-SNE comes across as one that has a pleasing, intuitive formulation, simple gradient and nice properties. Here is a [Google Tech Talks video](http://www.youtube.com/watch?v=RJVL80Gg3lA) of Laurens van der Maaten (the author) explaining the method. I set out to re-implement t-SNE from scratch since doing so is the best way of learning something that I know of, and what better language to do this in than - Javascript! :)
 
 Long story short, I've implemented t-SNE in JS, released it as [tsnejs on Github](https://github.com/karpathy/tsnejs), and created a small demo that uses the library to visualize the top twitter accounts based on what they talk about. In this post, I thought it might be fun to document a small 1-day project like this, from beginning to end. This also gives me an opportunity to describe some of my projects toolkit, which others might find useful.
