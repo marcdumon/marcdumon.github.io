@@ -12,7 +12,7 @@ I was recently looking into various ways of embedding unlabeled, high-dimensiona
 
 ```python
 for i in range(100):
-        print(i)
+    print(i)
 ```
 
 
