@@ -215,9 +215,9 @@ a:visited { color: #205caa; }
 .post-content blockquote {
   border-left: 4px solid #e8e8e8;
   padding-left: 20px;
-  font-size: 18px;
-  opacity: .6;
-  letter-spacing: -1px;
+  font-size: 14px;
+  opacity: .5;
+  letter-spacing: -0px;
   font-style: italic;
   margin: 30px 0;
 }
@@ -413,11 +413,9 @@ a:visited { color: #205caa; }
   .post-content h2 { font-size: 28px; }
   .post-content h3 { font-size: 22px; }
   .post-content h4 { font-size: 18px; }
-  .post-content blockquote { padding-left: 10px; 
-   font-size: 10px;}
+  .post-content blockquote { padding-left: 10px; }
   .post-content ul,
-  .post-content ol { padding-left: 10px;}
-                   
+  .post-content ol { padding-left: 10px; }
 
   .site-footer .column {
     float: none;
