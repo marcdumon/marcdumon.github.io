@@ -34,7 +34,12 @@ A few observations I derived from this exercise:
 
 - My impression from this exercise is that it will be hard to go above 80%, but I suspect improvements might be possible up to range of about 85-90%, depending on how wrong I am about the lack of training data. (**2015 update**: Obviously this prediction was way off, with state of the art now in 95%, as seen in this [Kaggle competition leaderboard](https://www.kaggle.com/c/cifar-10/leaderboard). I'm impressed!)
 
-I encourage people to try this for themselves (see my code, above), as it is very interesting and fun! I have trouble exactly articulating what I learned, but overall I feel like I gained more intuition for image classification tasks and more appreciation for the difficulty of the problem at hand.
+- This is just a test. TEST.                                    Hahahaha doest this tabs work? 
+sdfsdf                                                  and here's a formula $x*x=x_1*x_2/10$
+adsadqqqq
+ad
+
+I encourage peoplsdfe to try this for themselves (see my code, above), as it is very interesting and fun! I have trouble exactly articulating what I learned, but overall I feel like I gained more intuition for image classification tasks and more appreciation for the difficulty of the problem at hand.
 
 Finally, here is an example of my debugging interface:
 <img src="/assets/cifar_predict.jpg" width="100%">
