@@ -14,7 +14,7 @@ The OS I use is Linux (Kubuntu 19.10)
 [Atom Editor](https://atom.io/): Atom is a free and open-source text and source code editor with many plug-ins.
 
 [Instructions](https://flight-manual.atom.io/getting-started/sections/installing-atom/)
--  add the package repository to your system:
+- add the package repository to your system:
   ```
   wget -qO - https://packagecloud.io/AtomEditor/atom/gpgkey | sudo apt-key add -
   sudo sh -c 'echo "deb [arch=amd64] https://packagecloud.io/AtomEditor/atom/any/ any main" > /etc/apt/sources.list.d/atom.list'
