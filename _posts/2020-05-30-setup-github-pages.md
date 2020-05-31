@@ -1,13 +1,13 @@
 ---
 layout: page
 comments: false
-title:  "Workflow Github Pages"
-excerpt: "Some guidance to write blog posts on Github Pages"
+title:  "Setup Github Pages "
+excerpt: "Some instructions on how to setup a website on GitHub Pages"
 date:   2021-05-30 08:53:00
 mathjax: true
 ---
 
-This post gives some guidance on which software too use and how to setup a blog on Github Pages.
+This post gives some guidance on which software to use and how to setup a website on Github Pages.
 The OS I use is Linux (Kubuntu 19.10)
 
 ## Install Atom Editor
@@ -25,20 +25,20 @@ The OS I use is Linux (Kubuntu 19.10)
   sudo apt install atom
   ```
 
-## Setup Github
+## Setup Github repository
 - Create a new repository:  
   One you signed in go to [https://github.com/new](https://github.com/new).   
   You have to give your repository a special name to generate your website. That name is *username.github.io* (where “username” is your actual GitHub user name).  
   Fill in this 'Repository name' and click on the 'Create Repository' button.
 - Setup your site:   
   Click on 'Settings'   
-  ![Settings](/assets/2020-05-30-workflow-github-pages/github_settings.png "Settings")   
+  ![Settings](/assets/2020-05-30-setup-github-pages/github_settings.png "Settings")   
   Scroll down on the settings page, you’ll see the GitHub Pages section near the bottom. Click the Choose a theme button to start the process of creating your site.
-  ![Theme](/assets/2020-05-30-workflow-github-pages/github_theme.png 'Theme')   
+  ![Theme](/assets/2020-05-30-setup-github-pages/github_theme.png 'Theme')   
   Once you’ve clicked the button, you’ll be directed to the Theme Chooser. You’ll see several theme options in a carousel across the top of the page. Click on the images to preview the themes. Once you’ve selected one, click Select theme on the right to move on. It’s easy to change your theme later, so if you’re not sure, just choose one for now.   
-  ![Theme Chooser](/assets/2020-05-30-workflow-github-pages/github_theme_chooser.png 'Theme Chooser')   
+  ![Theme Chooser](/assets/2020-05-30-setup-github-pages/github_theme_chooser.png 'Theme Chooser')   
   You can leave the content for now. Just scroll to the bottom and click on 'Commit changes'
-  ![Commit Changes](/assets/2020-05-30-workflow-github-pages/github_commit.png 'Commit Changes')  
+  ![Commit Changes](/assets/2020-05-30-setup-github-pages/github_commit.png 'Commit Changes')  
 - Your github repository now contains the following two files:
   - _config.yml
   - index.html
@@ -63,12 +63,13 @@ The OS I use is Linux (Kubuntu 19.10)
   Click on 'Clone a repository from the Internet'. Select your *username/username.github.io*   
   Choose the local path where you want to save the local repository.   
   Click 'Clone'    
-  
+  All changes made on the local repository can be pushed to github now.
+- Your github repository now contains the following two files and one hidden directory:
+  - _config.yml
+  - .git/
+  - index.html
 
-
-
-
-## Install Jekyll
+## Install and setup Jekyll
 [Jekyll](jekyllrb.com): is a static site generator. You give it text written in your favorite markup language and it uses layouts to create a static website. You can tweak how you want the site URLs to look, what data gets displayed on the site, and more.     
 
 [Instructions](https://jekyllrb.com/docs/):   
@@ -87,38 +88,62 @@ The OS I use is Linux (Kubuntu 19.10)
 - Install Jekyll:
   ```
   gem install jekyll bundler
-  ```
-- Create and goto a new directory ./myblog
+  ```   
+
+Jekyll is now installed. Let's setup the local repository:
+- In terminal go to the local repository *./username.github.io*
 - Create a new Gemfile to list your project’s dependencies:
   ```
   bundle init
   ```
-- Edit the Gemfile and add jekyll as a dependency:
+  ```> Writing new Gemfile to /home/md/Temp/xxx_blog/Gemfile```
+- Your github repository now contains the following three files and one hidden directory:
+  - _config.yml
+  - .Gemfile.swp
+  - Gemfile
+  - .git/
+  - index.html
+
+- Edit the Gemfile and add Jekyll as a dependency:
   ```
   gem "jekyll"
   ```
-- Run bundle to install jekyll for your project:
+
+- Run bundle to install jekyll and dependencies for your project:
   ```
   bundle
   ```
 
+## Configure the Website
+- Edit the _config.yml file:   
+  ```yml
+  # Site settings
+  title:
+  email:
+  description:
+  baseurl: ""
+  url: "http://username.github.io"
+  twitter_username:
+  github_username:  
 
+  # Build settings
+  future: true
+  markdown: kramdown
+  permalink: pretty
 
+  highlighter: rouge
+  kramdown:
+    input: GFM
+    auto_ids: true
+    syntax_highlighter: rouge
+  ```
+- Download the [standard directories](/assets/2020-05-30-setup-github-pages/standard_directories.zip) and copy the directories in your repository directory.
+- Change the tracking-id for google analytics in `_includes/head.html`
 
-### Setup Github desktop
-- Add your local repository
-
-
-### Configure the Website
-
-
-
-
-
-
-
-
-
-
-
-https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
+## Usage
+- Start local webserver to see changes:
+  In the repository directory:
+  ```
+  jekyll serve
+  ```
+- To add a new post, always use the format yyyy-mm-dd-title.md
