@@ -75,16 +75,16 @@ The OS I use is Linux (Kubuntu 19.10)
 [Instructions](https://jekyllrb.com/docs/):   
 - Install Ruby development environment:  
   Install dependencies:  
-    ```
-    sudo apt-get install ruby-full build-essential zlib1g-dev
-    ```
+  ```
+  sudo apt-get install ruby-full build-essential zlib1g-dev
+  ```
   Add environment variables to your ~/.bashrc.
-    ```
-    echo '# Install Ruby Gems to ~/gems' >> ~/.bashrc
-    echo 'export GEM_HOME="$HOME/gems"' >> ~/.bashrc
-    echo 'export PATH="$HOME/gems/bin:$PATH"' >> ~/.bashrc
-    source ~/.bashrc
-    ```
+  ```
+  echo '# Install Ruby Gems to ~/gems' >> ~/.bashrc
+  echo 'export GEM_HOME="$HOME/gems"' >> ~/.bashrc
+  echo 'export PATH="$HOME/gems/bin:$PATH"' >> ~/.bashrc
+  source ~/.bashrc
+  ```
 - Install Jekyll:
   ```
   gem install jekyll bundler
