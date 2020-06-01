@@ -1,9 +1,9 @@
 #theme: jekyll-theme-cayman
 
 # Site settings
-title: Marc Dumon blog
+title: Marc Dumon Notes
 email: dumon.marc@gmail.com
-description: "Musings of a ...."
+description: "My notes on AI, Probability, Ergodicity and all things interesting"
 baseurl: ""
 url: "http://marcdumon.github.io"
 twitter_username: marcdumon
@@ -19,3 +19,6 @@ kramdown:
   input: GFM
   auto_ids: true
   syntax_highlighter: rouge
+
+plugins:
+    - jekyll-seo-tag

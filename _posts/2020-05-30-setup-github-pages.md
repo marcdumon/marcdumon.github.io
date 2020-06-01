@@ -3,7 +3,7 @@ layout: page
 comments: false
 title:  "Setup Github Pages "
 excerpt: "Some instructions on how to setup a website on GitHub Pages"
-date:   2021-05-30 08:53:00
+date:   2020-05-30 08:53:00
 mathjax: true
 ---
 
