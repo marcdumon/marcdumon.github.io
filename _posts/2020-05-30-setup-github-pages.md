@@ -1,6 +1,6 @@
 ---
 layout: page
-comments: false
+comments: true
 title:  "Setup Github Pages "
 excerpt: "Some instructions on how to setup a website on GitHub Pages"
 date:   2020-05-30 08:53:00
