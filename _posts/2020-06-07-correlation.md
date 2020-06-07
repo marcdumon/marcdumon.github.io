@@ -5,48 +5,50 @@ title:  "Correlation "
 excerpt: "Note on population, sample and spurious sample correlation. With python code"
 date:   2020-06-07 00:30:00
 mathjax: true
+
 ---
-
-Hello Inline \\(x+1=\sin(y)\\)   
-
-
-$$x+y+z\\
-+w$$
 
 
 Correlation refers to the degree to which two random variables are *linearly* related.  The correlation reflects the strength and direction of a linear relationship, but not the slope of that relationship.
 The correlation does not depend on the units of measurement and is always between -1 and 1. The correlation is +1 in the case of a perfect direct (increasing) linear relationship, -1 in a prefect inverse (decreasing) relationship and 0 when there is no linear relationship.
 
 ## Population correlation   
-The population (Pearson's product moment) correlation coefficient between two random variables X and Y is represented by the symbol $\boldsymbol{\rho_{X,Y}}$
+The population (Pearson's product moment) correlation coefficient between two random variables $$X$$ and $$Y$$ is represented by the symbol $$\boldsymbol{\rho_{X,Y}}$$
 
-\\[
-  \begin{align}
-    \rho_{X,Y} = Corr(X,Y)=\frac{Cov(X,Y)}{\sigma(x)\sigma(y)}\\  
-    x=y
+$$
+\begin{align}
+    \rho_{X,Y} = Corr(X,Y)=\frac{Cov(X,Y)}{\sigma(x)\sigma(y)} \tag{1}
   \end{align}
-\\]
+$$  
+
+
 Independence:  
-\\[
-  \begin{align*}
-    X\text{ and }Y\text{ are independent }&=> \rho_{X,Y}=0\\
-    \rho_{X,Y}=0&\ne>X\text{ and }Y\text{ are independent!}   
-  \end{align*}
-\\]
+
+$$
+  \begin{align}
+    X\text{ and }Y\text{ are independent }=> \rho_{X,Y}=0 \tag{2}\\   
+    \rho_{X,Y}=0\ne>X\text{ and }Y\text{ are independent!}   
+  \end{align}
+$$
+
 
 ## Sample correlation
-The sample correlation between $x_i$ and $y_i$, indexed by $i=1,...,n$ is represented by the symbol \boldsymbol{r_{x_iy_i}}. It can be used to *estimate* the population correlation between X and Y.   
+The sample correlation between $$x_i$$ and $$y_i$$, indexed by $$i=1,...,n$$ is represented by the symbol $$\boldsymbol{r_{x_iy_i}}$$. It can be used to *estimate* the population correlation between $$X$$ and $$Y$$.   
+
 $$\begin{align}
-  r_{xy}=\frac{\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})}{(n-1)s_xs_y}=\frac{\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})}{\sqrt{\sum_{i=1}^n(x-\bar{x})^2\sum_{i=1}^n(y-\bar{y})^2}}
-  \end{align}$$
-where $\bar{x}$ and $\bar{y}$ are the sample means and $s_x$ and $s_y$ are the *corrected sample standard deviations* of X and Y.   
-$r^2$ is the proportion of the total variance
+  r_{xy}&=\frac{\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})}{(n-1)s_xs_y} \tag{3}\\   
+\\
+  &=\frac{\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})}{\sqrt{\sum_{i=1}^n(x-\bar{x})^2\sum_{i=1}^n(y-\bar{y})^2}}
+  \end{align}
+  $$   
+
+where $$\bar{x}$$ and $$\bar{y}$$ are the sample means and $$s_x$$ and $$s_y$$ are the *corrected sample standard deviations* of $$X$$ and $$Y$$.   $$r^2$$ is the proportion of the total variance ($$s_y^2$$) of $$y$$ that can be explained by the linear regression of $$y$$ on $$x$$.
 
 ## Spurious Correlation
-Sample (observed) correlation $r$, just like sample mean etc, doesn't necessary correspond to the population (real) correlation $\rho$ !   
+Sample (observed) correlation $$r$$, just like sample mean etc, doesn't necessary correspond to the population (real) correlation $$\rho$$ !   
 **Never assume correlations unless there is statistical significance.**
 
-## Python
+## Python Experiments
 ### Import libraries
 ```python
 import numpy as np
@@ -57,14 +59,15 @@ from plotly.subplots import make_subplots
 ```
 
 
-### Generate two random variables with correlation coefficient $r$:
-We can use a simplified bivariate form of [Cholesky decomposition](wikipedia.org/wiki/Cholesky_decomposition), sometimes called the Kaiser-Dickman algorithm (Kaiser & Dickman, 1962) to create two random variables with correlation coefficient $r$.   
-First we create two random variables $X_1$ and $X_2$ with $var(X_1) = var(X_2)$.   
-Then we apply the following Kaiser-Dickman algorithm to create correlated random variables $X$ and $Y$:
+### Generate two random variables with correlation coefficient $$r$$:
+We can use a simplified bivariate form of [Cholesky decomposition](wikipedia.org/wiki/Cholesky_decomposition), sometimes called the Kaiser-Dickman algorithm (Kaiser & Dickman, 1962) to create two random variables with correlation coefficient $$r$$.   
+First we create two random variables $$X_1$$ and $$X_2$$ with $$var(X_1) = var(X_2)$$.   
+Then we apply the following Kaiser-Dickman algorithm to create correlated random variables $$X$$ and $$Y$$:
+
 $$\begin{align}
   \begin{cases}
     X = X_1\\
-    Y = r*X_1 + \sqrt{1-r^2}*X_2
+    Y = r*X_1 + \sqrt{1-r^2}*X_2 \tag{4}
   \end{cases}
 \end{align}$$
 
@@ -97,7 +100,7 @@ for i, trace in enumerate(traces):
     fig['layout'][f'yaxis{i+1}'].update(range=[-5, 5])
 fig   
 ```
->![Random variables with different correlation coefficient r](./plot_rv_different_r.png)
+>![Random variables with different correlation coefficient r](/assets/2020-06-07-correlation/plot_rv_different_r.png)
 
 ### Same correlation coefficient, but different slope:
 ```Python
@@ -122,24 +125,24 @@ for i, trace in enumerate(traces):
     fig['layout'][f'yaxis{i+1}'].update(range=[-5, 5])
 fig
 ```
->![Same correlation coefficient, but different slope](plot_rv_different_slope.png)
+>![Same correlation coefficient, but different slope](/assets/2020-06-07-correlation/plot_rv_different_slope.png)
 
 
 
 ### Spurious sample correlations
-Create 2 un-correlated random variables $X$ and $Y$:
+Create 2 un-correlated random variables $$X$$ and $$Y$$:
 ```python
 X = stat.norm.rvs(size=1500)
 Y = stat.norm.rvs(size=1500)
  ```
-Check if the (real) correlation $Corr(X,Y) \approx 0$
+Check if the (real) correlation $$Corr(X,Y) \approx 0$$
 ```Python
 rho = stat.pearsonr(X,Y)[0]
 print(rho)
 ```
 >-5.875043840207288e-05   
 
-X and Y are un-correlated as expected. Now, let's take 1.000 different samples $x$ and $y$ of size 15 from $X$ and $Y$ respectively and calculate their sample correlations.
+X and Y are un-correlated as expected. Now, let's take 1.000 different samples $$x$$ and $$y$$ of size 15 from $$X$$ and $$Y$$ respectively and calculate their sample correlations.
 ```python
 sample_corrs = pd.DataFrame()
 for i in range(1000):
@@ -164,7 +167,7 @@ fig.add_trace(go.Bar(x=sample_corrs['i'],y=sample_corrs['r'],marker_color='red',
 fig.update_layout(width=500, height=500,
                   yaxis_range=[-1,1])
 ```
->![Spurious correlations](./plot_sample_corr_15.png)
+>![Spurious correlations](/assets/2020-06-07-correlation/plot_sample_corr_15.png)
 
 Spurious correlations are all over the place !
 Now, let's do the same but with samples of size 45
@@ -181,6 +184,6 @@ fig.add_trace(go.Bar(x=sample_corrs['i'],y=sample_corrs['r'],marker_color='red',
 fig.update_layout(width=500, height=500,
                  yaxis_range=[-1,1])
 ```
->![Spurious correlations](./plot_sample_corr_45.png)
+>![Spurious correlations](/assets/2020-06-07-correlation/plot_sample_corr_45.png)
 
 Correlations are more compressed around zero, but still all over the place!
