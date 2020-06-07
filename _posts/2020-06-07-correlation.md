@@ -2,7 +2,7 @@
 layout: post
 comments: true
 title:  "Correlation "
-excerpt: "Note on population, sample and spurious sample correlation. With python code"
+excerpt: "Note on population correlation, sample correlation and spurious sample correlation. With python code"
 date:   2020-06-07 00:30:00
 mathjax: true
 
