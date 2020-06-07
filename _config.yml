@@ -22,8 +22,7 @@ kramdown:
 
 plugins:
     - jekyll-seo-tag
-    
-    
+
 # Disqus Comments
 disqus:
     # Leave shortname blank to disable comments site-wide.
