@@ -8,7 +8,6 @@ mathjax: true
 
 ---
 
-
 Correlation refers to the degree to which two random variables are *linearly* related.  The correlation reflects the strength and direction of a linear relationship, but not the slope of that relationship.
 The correlation does not depend on the units of measurement and is always between -1 and 1. The correlation is +1 in the case of a perfect direct (increasing) linear relationship, -1 in a prefect inverse (decreasing) relationship and 0 when there is no linear relationship.
 

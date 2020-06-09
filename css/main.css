@@ -162,6 +162,29 @@ a:visited { color: #205caa; }
   color: #818181;
 }
 
+/* -----------------------------------------------------------*/
+
+
+table{
+    display: block;
+    border-collapse: collapse;
+    border-spacing: 0;
+   
+}
+
+th{
+    border:2px solid #000000;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+td{
+    border:1px solid #000000;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+/* -----------------------------------------------------------*/
+
 
 /* Post styles */
 /* ----------------------------------------------------------*/
