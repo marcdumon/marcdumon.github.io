@@ -1,11 +1,8 @@
 p {
     text-align: justify;
 }
-/*
-.container, .container-lg, .container-md, .container-sm, .container-xl {
-    max-width: 1500px;
-} */
 
-.container {
-    max-width: 100% !important;
+.container, .container-lg, .container-md, .container-sm, .container-xl {
+    max-width: 15000px;
 }
+
