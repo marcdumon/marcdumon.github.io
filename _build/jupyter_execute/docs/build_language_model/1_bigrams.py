@@ -6,7 +6,7 @@
 # # Bigram Language Model
 # <hr>
 
-# In[3]:
+# In[1]:
 
 
 import torch
@@ -29,7 +29,7 @@ seed = 2**31 - 1
 
 # **Load the data**
 
-# In[4]:
+# In[2]:
 
 
 # Load the data
@@ -42,7 +42,7 @@ print(names[:5])
 
 # Our data consists of 32,033 names, each with a length between 2 and 15 characters. To better understand the structure and patterns of the data at a character level, we can print the bigrams for the first 2 names. A bigram is a pair of consecutive characters in a string. By printing the bigrams for the first 2 names, we can gain a better understanding of what our model will be learning and predicting. 
 
-# In[5]:
+# In[3]:
 
 
 for w in names[:2]:
@@ -55,7 +55,7 @@ for w in names[:2]:
 # We need two special characters besides a..z to indicate the beginning \<S> and the end \<E> of a name. But because \<S> can never be an output and \<E> never an input we can simplify a little and use only one special character to indicate both the beginning and the end of a name. We choose "`.`" as special character.   
 # Our bigrams now look as follows:
 
-# In[6]:
+# In[4]:
 
 
 for w in names[:2]:
@@ -68,7 +68,7 @@ for w in names[:2]:
 # **Encoding and decoding characters**   
 # We define an encoder `ch2ix` and decoder `ix2ch` function that maps a character with a numerical representation (i.e. a unique integer) and vice-versa. 
 
-# In[7]:
+# In[5]:
 
 
 chars = '.' + string.ascii_lowercase
@@ -88,7 +88,7 @@ print('E.g. emma:', [ch2ix[c] for c in '.emma.'])
 
 # **Counting**
 
-# In[8]:
+# In[6]:
 
 
 bg_count: dict[tuple[str, str], int] = {}
@@ -107,7 +107,7 @@ print(a[-10:])
 # 
 # Let's now represent the bigram counts in a 2D tensor as it allows for more efficient manipulation and analysis of the data. The rows of the tensor represent the previous character and the columns represent the next character, with the values being the bigram counts. By organizing the data in this way, we can easily access and analyze the frequency of different bigrams in the data. The tensor has a shape of (27, 27) because there are 26 characters plus one special character, giving a total of 27 different categories. This representation of the data allows us to more easily model the conditional probabilities of the next character given the previous character, which can be used to predict the next character in a sequence.
 
-# In[9]:
+# In[7]:
 
 
 # Count all bigrams
@@ -155,7 +155,7 @@ plt.show()
 # **Broadcasting**: N has dimension (27,27). `N.sum(dim=1,keepdim=True)` has dimention (27,1). It's not possible to devide a (27,27) tensor by a (27,1) tensor. Nevertheless `N / N.sum(dim=1,keepdim=True)` is valid because broadcasting stretches the (27,1) column vector into a (27,27) matrix by copying the column vector 27 times and then makes an element wise division.
 # ```
 
-# In[10]:
+# In[8]:
 
 
 P = N / N.sum(dim=1, keepdim=True)
@@ -170,7 +170,7 @@ P
 # ```
 # Let's now generate a few names:
 
-# In[11]:
+# In[9]:
 
 
 from numbers import Number
@@ -194,7 +194,7 @@ for i in range(10):
 # The generated names produced by our bigram model are of poor quality, which is due to the limitations of the bigram model itself.   
 # However, when we compare the performance of the bigram model with a model that simply samples characters uniformly (where each character has an equal probability of 1/27 of being selected as the next character), we can see that the bigram model is actually able to capture some meaningful patterns and structure in the data. This suggests that the bigram model is able to provide some level of prediction accuracy, even if it is not able to produce high-quality names.
 
-# In[12]:
+# In[10]:
 
 
 g = torch.Generator().manual_seed(seed)
@@ -245,7 +245,7 @@ for i in range(10):  # 10 names.
 # 
 # 
 
-# In[13]:
+# In[11]:
 
 
 log_likelihood = 0.0
@@ -270,7 +270,7 @@ print(f'mean nll: {nll / n:.4f}')
 # 
 # The bigram 'cb' in following example has 0 probability, hence the log-likelihood is $\infty$. 
 
-# In[14]:
+# In[12]:
 
 
 log_likelihood = 0.0
@@ -295,7 +295,7 @@ print(f'mean nll: {nll / n:.2f}')
 # **Solution: Smoothing**   
 # Add 1 or more to the counts. The bigger the number you add, the smoother the model becomes. 
 
-# In[15]:
+# In[13]:
 
 
 smooth = 1
@@ -321,7 +321,7 @@ print(f'mean nll: {nll / n:.2f}')
 
 # If the smooting number is very high then the distribution becomes more uniform and the output more random.
 
-# In[16]:
+# In[14]:
 
 
 smooth = 1000
@@ -348,7 +348,7 @@ for i in range(10):  # 10 names.
 # **Trainingset**: We create a trainingset of all the bigrams. It contains two lists, the inputs `xs` and the targets `ys`.   
 # We will start with just one name to better see how the neural network is build step-by-step.
 
-# In[17]:
+# In[15]:
 
 
 xs, ys = [], []
@@ -372,7 +372,7 @@ print(f'{xs=}\n{ys=}')
 
 # **One-hot encodings**: In order to use the integer character indexes as input in a neural network, we need to use a technique called [one-hot encoding](https://www.wikiwand.com/en/One-hot). One-hot encoding is a way of representing categorical data (such as integer indexes or characters) as a vector of binary values. A one-hot vector for a character with index `ix` has all zero values except for the ix-th element, which is set to 1. This encoding method is used because it avoids implying a natural ordering between different characters (for example, "`a`" < "`b`"), which would not be meaningful in this context. Additionally, it is not desirable to have the input neurons take on integer values that are then multiplied by the weights, as this would not provide useful information to the model. PyTorch provides a function ([torch.nn.functional.one_hot()](https://pytorch.org/docs/stable/generated/torch.nn.functional.one_hot.html)) to one-hot encode integers.  
 
-# In[18]:
+# In[16]:
 
 
 xenc = F.one_hot(xs, 27).float()
@@ -385,7 +385,7 @@ plt.show()
 # **1 neuron**: The neuron will look at the input vectors (`xenc`) and perform a simple linear function $W\cdot x+b$.   
 # We create a (27,1) weight W and initialize it with a normal distribution using [torch.randn](https://pytorch.org/docs/stable/generated/torch.randn.html). W is a column vector with 27 numbers. When we do a matrix multiplication of our input `xenc` (5,27) with `W` (27,1) we get 1 neuron with 5 (=batchsize) activations, one for each input vector.     
 
-# In[19]:
+# In[17]:
 
 
 W = torch.randn(27, 1)
@@ -395,7 +395,7 @@ print(xenc @ W)
 
 # **27 neurons**: In stead of only 1 neuron we would like to have 27. The shape of `W` will be (27,27). Each neuron has its 27 weights in the columns of `W`. We evaluate in parallel all the 27 neurons on all the 5 inputs, which is very efficient. Our output is now (5,27) . (27,27) -> (5, 27). Each element of the output is telling us what the firing rate of those neurons are on every one of the five samples. 
 
-# In[20]:
+# In[18]:
 
 
 W = torch.randn(27, 27)
@@ -405,7 +405,7 @@ print(xenc @ W)
 
 # E.g. Element [3,13] from the output gives us the firing rate of the 13th neuron of the 3th input. It was achieved by the dot product of the 3th input and the 13th column of W.
 
-# In[21]:
+# In[19]:
 
 
 print(f'Element [3,13] from the output: {(xenc @ W)[3, 13]:.4f}')
@@ -422,7 +422,7 @@ print(f'Dot product of input 3 with column 13 of W: {xenc[3] @ W[:, 13]:.4f}')
 # - To obtain probabilities from the counts, we can normalize the counts so that they sum to 1 and are between 0 and 1. This will allow us to interpret the output of the network as a valid probability distribution over the possible next characters in the sequence.
 # 
 
-# In[22]:
+# In[20]:
 
 
 logits = xenc @ W  # log-counts
@@ -444,7 +444,7 @@ print(probs.sum(1))
 
 # **Summary**
 
-# In[23]:
+# In[21]:
 
 
 print(f'Inputs:  {xs}')
@@ -453,7 +453,7 @@ print(f'Targets: {ys}')
 xenc = F.one_hot(xs, num_classes=27).float()  # (5,27)
 
 
-# In[24]:
+# In[22]:
 
 
 # Randomly initialize 27 neurons weights; each neuron receives 27 inputs.
@@ -461,7 +461,7 @@ g = torch.Generator().manual_seed(seed)
 W = torch.randn((27, 27), generator=g)
 
 
-# In[25]:
+# In[23]:
 
 
 # Forward pass:
@@ -473,7 +473,7 @@ counts = logits.exp()  # (5,27)
 probs = counts / counts.sum(dim=1, keepdim=True)  # (5,27)
 
 
-# In[26]:
+# In[24]:
 
 
 nlls = torch.zeros(5)
@@ -502,7 +502,7 @@ print('average negative log likelihood, i.e. loss =', nlls.mean().item())
 
 # **Minimize the loss**: The loss, or mean negative log-likelihood, is composed of differential operations, which means that it can be minimized by adjusting the weights of W. This process, known as tuning, involves calculating the gradients of the loss with respect to the weights and using these gradients to update the weights in a way that reduces the loss. By minimizing the loss, we can improve the performance of the model and increase its ability to accurately predict the next character in a sequence based on the previous character.
 
-# In[27]:
+# In[25]:
 
 
 # Create the full dataset
@@ -521,7 +521,7 @@ num = xs.nelement()
 print('number of bigrams: ', num)
 
 
-# In[28]:
+# In[26]:
 
 
 # Randomly initialize 27 neurons weights; each neuron receives 27 inputs.
@@ -529,7 +529,7 @@ g = torch.Generator().manual_seed(seed)
 W = torch.randn((27, 27), generator=g, requires_grad=True)
 
 
-# In[29]:
+# In[27]:
 
 
 loss = torch.tensor(0)
@@ -564,13 +564,13 @@ print('loss: ', loss.item())
 # $\large \frac{e^{w_{ij}}}{\sum_j w_{ij}} = p_{ij}$
 # 
 
-# In[30]:
+# In[28]:
 
 
 W.exp() / N
 
 
-# In[31]:
+# In[29]:
 
 
 (W.exp() / W.exp().sum(1, True)).round(decimals=3) - P.round(decimals=3)
@@ -578,7 +578,7 @@ W.exp() / N
 
 # ### Sampling names
 
-# In[32]:
+# In[30]:
 
 
 g = torch.Generator().manual_seed(seed)
@@ -604,7 +604,7 @@ for i in range(5):
 
 # In the simple counting model, we smoothed the probability distributions by adding fake counts, which made the distributions more uniform. In the gradient-based model, we can achieve a similar effect by adding a regularization component to the loss function that incentivizes the elements of W to be near 0. This is equivalent to label smoothing, as setting the elements of W to 0 leads to uniform probability distributions (with all elements equal to 1). We can do this by adding a term such as `(W**2).mean()` to the loss function, which will be minimized along with the main loss term. This will encourage the elements of W to become closer to 0, which will smooth the probability distributions produced by the model. As a result, the loss function now has two components: one that tries to get the probabilities right and another that simultaneously tries to make all of the elements of W close to 0.
 
-# In[62]:
+# In[31]:
 
 
 g = torch.Generator().manual_seed(2147483647)
@@ -631,7 +631,7 @@ for k in range(1000):
     W.data += -50 * W.grad  # type: ignore
 
 
-# In[63]:
+# In[32]:
 
 
 g = torch.Generator().manual_seed(seed)
