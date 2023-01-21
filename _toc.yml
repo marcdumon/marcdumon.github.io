@@ -1,0 +1,30 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: intro
+parts:
+
+# - caption: DEFAULT JB FILES
+#   chapters:
+#   - file: docs/markdown
+#   - file: docs/notebooks
+#   - file: docs/markdown-notebooks
+
+- caption: BUILDING A LANGUAGE MODEL
+  chapters:
+  - file: docs/build_language_model/0_intro
+  - file: docs/build_language_model/1_bigrams
+  - file: docs/build_language_model/2_mlp
+  - file: docs/build_language_model/3_activations_gradients_batchnorm
+  # - file: docs/build_language_model/test_plotly
+
+
+- caption: MY FILES
+  chapters:
+  - file: docs/my_files/jupyter_book_notes
+
+# - caption: NEURAL NETWORKS
+#   chapters:
+
+

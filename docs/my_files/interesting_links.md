@@ -1,0 +1,4 @@
+- [Machine Learning and Imaging - Spring 2022](https://deepimaging.github.io)
+- [Statquest list](https://statquest.org/video-index/)
+- [Frequentism and Bayesianism: What's the Big Deal? ](https://www.youtube.com/watch?v=KhAUfqhLakw&t=2s)
+- [Linux bash](https://www.hackerrank.com/domains/shell)
