@@ -60,6 +60,7 @@ html:
     hypothesis              : false
     utterances              : false
   announcement              : "" # A banner announcement at the top of the site.
+  google_analytics_id       : G-MSZJYDCNQ4
 
 sphinx:
   config:
