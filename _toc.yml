@@ -11,7 +11,7 @@ parts:
 #   - file: docs/notebooks
 #   - file: docs/markdown-notebooks
 
-- caption: BUILD A LANGUAGE MODEL
+- caption: BUILDING A LANGUAGE MODEL
   chapters:
   - file: docs/build_language_model/0_intro
   - file: docs/build_language_model/1_bigrams
