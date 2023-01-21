@@ -1,8 +1,7 @@
 p {
     text-align: justify;
-    color: #ff0000;
 }
 
 .container, .container-lg, .container-md, .container-sm, .container-xl {
-    max-width: 150px;
+    max-width: 1500px;
 }
