@@ -4,7 +4,7 @@
 ## Setup
 - git:
     ````bash
-    git remote add origin https://github.com/marcdumon/test_jupyter_book
+    git remote add origin https://github.com/marcdumon/marcdumon.github.io.git
     ````
 - Notebook tags:
   See: [myst-cheatsheet-code-cell-tags](https://jupyterbook.org/en/stable/reference/cheatsheet.html#myst-cheatsheet-code-cell-tags)
@@ -13,7 +13,7 @@
     - hide-output
     - hide-cell : Hides inputs and outputs of code cell
 
-## Update the book
+## Update the book  
 
 - Add pages to `_toc.yaml`.
 
@@ -25,10 +25,18 @@
     ````bash
     jupyter-book build .
     ````
-- To push the updated book to Github:
+- To push the updated book to Github:   
+    
     ````bash
     ghp-import -n -p -f _build/html
     ````
+
+    BTW: Authentication via password doesn't work anymore. Instead, generate a [Personal access tokens on github](https://github.com/settings/tokens), and then   
+    update /media/Development/0_jupyter_book/.git/config:  
+    [remote "origin"]   
+	url = https://marcdumon:TOKEN@github.com/marcdumon/marcdumon.github.io.git    
+	fetch = +refs/heads/*:refs/remotes/origin/*    
+
 
 ## Default configuration files
 - `_config.yml`
