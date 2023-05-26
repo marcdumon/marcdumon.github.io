@@ -11,7 +11,10 @@ parts:
   - file: docs/build_language_model/0_intro
   - file: docs/build_language_model/1_bigrams
   - file: docs/build_language_model/2_mlp
-  - file: docs/build_language_model/3_activations_gradients_batchnorm
+  - file: docs/build_language_model/3.1_activations_gradients_batchnorm
+  - file: docs/build_language_model/3.2_activations_gradients_batchnorm
+  - file: docs/build_language_model/4_backprop
+  - file: docs/build_language_model/5_wavenet
   # - file: docs/build_language_model/test_plotly
 
 
