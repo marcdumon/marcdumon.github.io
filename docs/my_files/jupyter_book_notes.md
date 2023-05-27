@@ -38,11 +38,7 @@
     BTW: Authentication via password doesn't work anymore. Instead, generate a [Personal access tokens on github](https://github.com/settings/tokens), and then   
     update /media/Development/0_jupyter_book/.git/config:  
     [remote "origin"]   
-<<<<<<< HEAD
-	url = https://marcdumon:<TOKEN>@github.com/marcdumon/marcdumon.github.io.git    
-=======
 	url = https://marcdumon:TOKEN@github.com/marcdumon/marcdumon.github.io.git    
->>>>>>> ab7ee450b4d2373c72fe456c75805ddbbe3a19e1
 	fetch = +refs/heads/*:refs/remotes/origin/*    
 
 
