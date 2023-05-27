@@ -1226,7 +1226,7 @@ exist: False  - linnaly.
 <p>The problem with the MLP model is that we are crushing all the information into a single vector from the beginning. Even if we make the model deeper, we will still have the same problem.</p>
 <p>We can solve this by using a hierarchical approach like in Wavenet. In that architecture, the input is cruched slowly. In particular we take two characters and fuse them into a bi-gram representation. Then we take these bi-grams and fuse them into a 4-gram representation. We continue this process until we have a representation of the entire sequence. By using this tree-like hierarchical approach, we fuse the information from the previous context slowly.</p>
 <figure class="align-default" id="id2">
-<a class="reference internal image-reference" href="../../_images/wavenet2.png"><img alt="../../_images/wavenet2.png" src="../../_images/wavenet2.png" style="width: 250px;" /></a>
+<a class="reference internal image-reference" href="../../_images/wavenet2.png"><img alt="../../_images/wavenet2.png" src="../../_images/wavenet2.png" style="width: 400px;" /></a>
 <figcaption>
 <p><span class="caption-number">Fig. 3 </span><span class="caption-text">Wavenet (van den Oord et al. 2016)</span><a class="headerlink" href="#id2" title="Permalink to this image">#</a></p>
 </figcaption>

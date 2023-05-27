@@ -413,44 +413,15 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pytorch-backward-pass">Pytorch backward pass</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#manual-backward-pass">Manual backward pass</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-entropy-loss">Cross entropy loss</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#layer-2">Layer 2</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#layer-1">Layer 1</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#non-linearity">Non-linearity</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#batch-norm">Batch norm</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-batch-norm">Pre-batch norm</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-derivative-is-the-sum-of-the-derivatives-of-the-3-branches-begin-align-begin-bmatrix-a-11-a-21-a-31-a-21-a-22-a-32-a-31-a-23-a-33-end-bmatrix-end-align">The derivative is the sum of the derivatives of the 3 branches:
-$<span class="math notranslate nohighlight">\(
-\begin{align*}
-  \begin{bmatrix}
-    a_{11} + a_{21} + a_{31}\\
-    a_{21} + a_{22} + a_{32}\\
-    a_{31} + a_{23} + a_{33}    
-  \end{bmatrix}
-\end{align*}
-\)</span>$</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#layer-2">Layer 2</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#layer-1">Layer 1</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#non-linearity">Non-linearity</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#batch-norm">Batch norm</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#toy-example-begin-align-begin-bmatrix-a-11-a-12-a-21-a-22-end-bmatrix-begin-bmatrix-b-1-b-2-end-bmatrix-begin-bmatrix-a-11-a-12-bs-1-a-21-a-22-bs-1-end-bmatrix-end-align">Toy example:
-$<span class="math notranslate nohighlight">\(
-\begin{align*}
-  \begin{bmatrix}
-    a_{11} &amp; a_{12}\\
-    a_{21} &amp; a_{22}
-  \end{bmatrix} -&gt;
-  \begin{bmatrix}
-    b_1 &amp; b_2
-  \end{bmatrix} =
-  \begin{bmatrix}
-    (a_{11} + a_{12})/(bs-1) &amp;  (a_{21} + a_{22})/(bs-1)
-  \end{bmatrix}
-\end{align*}
-\)</span>$</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-batch-norm">Pre-batch norm</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#embedding-layer">Embedding layer</a></li>
 </ul>
 </li>
@@ -714,14 +685,14 @@ X.shape: torch.Size([22691, 3]), Y.shape: torch.Size([22691])
 <p>Batch norm calculation:</p>
 <ul class="simple">
 <li><p>emb_cat is a 32x30 tensor (batch size x sequence length)</p></li>
-<li><p><span class="math notranslate nohighlight">\(\textrm{h\_pre\_bn} = \textrm{emb\_cat} \cdot W_1 + b_1\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(\textrm{bn\_mean\_i} = \sum_{i=1}^{32}{h\_pre\_bn}_i\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(\textrm{bn\_diff} = \textrm{h\_pre\_bn} - \textrm{bn\_mean\_i}\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(\textrm{bn\_diff2}= \textrm{bn\_diff}^2\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(\textrm{bn\_var} = \sum_{i=1}^{32}\textrm{bn\_diff2}\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(\textrm{bn\_var\_inv} = \frac{1}{\sqrt{(\textrm{bn\_var} + \epsilon)}}\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(\textrm{bn\_raw} = \textrm{bn\_diff} * \textrm{bn\_var\_inv}\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(\textrm{h\_pre\_act} = \textrm{bn\_gain} * \textrm{bn\_raw} + \textrm{bn\_bias}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\textrm{h\textunderscore pre\textunderscore bn} = \textrm{emb\textunderscore cat} \cdot W_1 + b_1\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\textrm{bn\textunderscore mean\textunderscore i} = \sum_{i=1}^{32}\textrm{h\textunderscore pre\textunderscore bn}_i\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\textrm{bn\textunderscore diff} = \textrm{h\textunderscore pre\textunderscore bn} - \textrm{bn\textunderscore mean\textunderscore i}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\textrm{bn\textunderscore diff2}= \textrm{bn\textunderscore diff}^2\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\textrm{bn\textunderscore var} = \sum_{i=1}^{32}\textrm{bn\textunderscore diff2}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\textrm{bn\textunderscore var\textunderscore inv} = \frac{1}{\sqrt{(\textrm{bn\textunderscore var} + \epsilon)}}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\textrm{bn\textunderscore raw} = \textrm{bn\textunderscore diff} * \textrm{bn\textunderscore var\textunderscore inv}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\textrm{h\textunderscore pre\textunderscore act} = \textrm{bn\textunderscore gain} * \textrm{bn\textunderscore raw} + \textrm{bn\textunderscore bias}\)</span></p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -912,11 +883,7 @@ Broadcasting a 3x1 tensor to a 3x3 tensor</p>
   \end{bmatrix} 
 \end{align*}
 \end{split}\]</div>
-</section>
-</section>
-</section>
-<section id="the-derivative-is-the-sum-of-the-derivatives-of-the-3-branches-begin-align-begin-bmatrix-a-11-a-21-a-31-a-21-a-22-a-32-a-31-a-23-a-33-end-bmatrix-end-align">
-<h2>The derivative is the sum of the derivatives of the 3 branches:
+<p>The derivative is the sum of the derivatives of the 3 branches:
 $<span class="math notranslate nohighlight">\(
 \begin{align*}
   \begin{bmatrix}
@@ -925,7 +892,8 @@ $<span class="math notranslate nohighlight">\(
     a_{31} + a_{23} + a_{33}    
   \end{bmatrix}
 \end{align*}
-\)</span>$<a class="headerlink" href="#the-derivative-is-the-sum-of-the-derivatives-of-the-3-branches-begin-align-begin-bmatrix-a-11-a-21-a-31-a-21-a-22-a-32-a-31-a-23-a-33-end-bmatrix-end-align" title="Permalink to this heading">#</a></h2>
+\)</span>$</p>
+<hr class="docutils" />
 <p><code class="docutils literal notranslate"><span class="pre">counts</span></code> is a 32x27 tensor and <code class="docutils literal notranslate"><span class="pre">counts_sum_inv</span></code> is a 32x1 tensor. <code class="docutils literal notranslate"><span class="pre">counts_sum_inv</span></code> gets broadcasted (replicated 27x) to a 32x27 tensor and then multiplied by <code class="docutils literal notranslate"><span class="pre">counts</span></code>. In the backward pass we have to sum the derivatives of the 27 branches.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -1200,8 +1168,9 @@ We can calculate the derivative like we did for <code class="docutils literal no
 </div>
 </div>
 </div>
+</section>
 <section id="layer-2">
-<h3>Layer 2<a class="headerlink" href="#layer-2" title="Permalink to this heading">#</a></h3>
+<h4>Layer 2<a class="headerlink" href="#layer-2" title="Permalink to this heading">#</a></h4>
 <p><strong>d_h</strong>, <strong>d_W2</strong>, <strong>d_b2</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">logits</span> <span class="o">=</span> <span class="n">h</span> <span class="o">@</span> <span class="n">W2</span> <span class="o">+</span> <span class="n">b2</span> 
 </pre></div>
@@ -1238,15 +1207,16 @@ We can calculate the derivative like we did for <code class="docutils literal no
 \end{align*}
 \end{split}\]</div>
 <div class="math notranslate nohighlight">
-\[ \begin{align}\begin{aligned}\begin{split}
+\[\begin{split}
 \begin{align*}
-\textsf{We can now calculate the derivative of d with respect to a.}&amp;\\
+  \textsf{We can now calculate the derivative of d with respect to a.}&amp;\\
   \begin{cases}
     \large\frac{\delta L}{\delta a_{11}} &amp;= {\large\frac{\delta L}{\delta d_{11}}}.b_{11} + {\large\frac{\delta L}{\delta d_{12}}}.b_{12}\\\\
     \large\frac{\delta L}{\delta a_{12}} &amp;= {\large\frac{\delta L}{\delta d_{11}}}.b_{21} + {\large\frac{\delta L}{\delta d_{12}}}.b_{22}\\\\
     \large\frac{\delta L}{\delta a_{21}} &amp;= {\large\frac{\delta L}{\delta d_{21}}}.b_{11} + {\large\frac{\delta L}{\delta d_{22}}}.b_{12}\\\\
     \large\frac{\delta L}{\delta a_{22}} &amp;= {\large\frac{\delta L}{\delta d_{21}}}.b_{21} + {\large\frac{\delta L}{\delta d_{22}}}.b_{22} 
-  \end{cases}\\\\\end{split}\\\begin{split}  \frac{\delta L}{\delta a} =
+  \end{cases}\\\\
+  \frac{\delta L}{\delta a} =
   \begin{bmatrix}
     \large\frac{\delta L}{\delta a_{11}} &amp; \large\frac{\delta L}{\delta a_{12}}\\\\
     \large\frac{\delta L}{\delta a_{21}} &amp; \large\frac{\delta L}{\delta a_{22}}
@@ -1258,21 +1228,26 @@ We can calculate the derivative like we did for <code class="docutils literal no
   \begin{bmatrix}
     b_{11} &amp; b_{21}\\
     b_{12} &amp; b_{22}
-  \end{bmatrix} &amp;=\end{split}\\\begin{split}  \begin{bmatrix}
+  \end{bmatrix} &amp;=
+  \begin{bmatrix}
     \large\frac{\delta L}{\delta d_{11}} &amp; \large\frac{\delta L}{\delta d_{12}}\\\\
     \large\frac{\delta L}{\delta d_{21}} &amp; \large\frac{\delta L}{\delta d_{22}}
   \end{bmatrix} \cdot
   \begin{bmatrix}
     b_{11} &amp; b_{12}\\
     b_{21} &amp; b_{22}
-  \end{bmatrix}^T =\end{split}\\\begin{split}  \frac{\delta L}{\delta d} \cdot b^T\\\\\end{split}\\\begin{split}  \textsf{Similarly, we can calculate the derivative of d with respect to b.}\\
-  \frac{\delta L}{\delta b} = a^T \cdot \frac{\delta L}{\delta d}\\\\\end{split}\\\begin{split}  \textsf{And the derivative of d with respect to c.}\\
+  \end{bmatrix}^T =
+  \frac{\delta L}{\delta d} \cdot b^T\\\\
+  \textsf{Similarly, we can calculate the derivative of d with respect to b.}\\
+  \frac{\delta L}{\delta b} = a^T \cdot \frac{\delta L}{\delta d}\\\\
+  \textsf{And the derivative of d with respect to c.}\\
   \begin{cases}
     \large\frac{\delta L}{\delta c_1} &amp;= {\large\frac{\delta L}{\delta d_{11}}}.1 + {\large\frac{\delta L}{\delta d_{21}}}.1\\\\
     \large\frac{\delta L}{\delta c_2} &amp;= {\large\frac{\delta L}{\delta d_{12}}}.1 + {\large\frac{\delta L}{\delta d_{22}}}.1
   \end{cases}\\\\
-  \frac{\delta L}{\delta c} = \frac{\delta L}{\delta d}\textsf{.sum(axis=0)}\\\\\end{split}\\\end{align*}
-\end{aligned}\end{align} \]</div>
+  \frac{\delta L}{\delta c} = \frac{\delta L}{\delta d}\textsf{.sum(axis=0)}\\\\
+\end{align*}
+\end{split}\]</div>
 <hr class="docutils" />
 <p><code class="docutils literal notranslate"><span class="pre">h</span></code> is a 32 x 64 tensor, <code class="docutils literal notranslate"><span class="pre">W2</span></code> is a 64 x 27 tensor and <code class="docutils literal notranslate"><span class="pre">b2</span></code> is 27d vector. The bias <code class="docutils literal notranslate"><span class="pre">b2</span></code> is broadcasted to a 32 x 27 tensor (<code class="docutils literal notranslate"><span class="pre">h</span> <span class="pre">&#64;</span> <span class="pre">W2</span></code>). Internally, the broadcasting is done by casting the 27d vector to a 1 x 27 tensor and then replicating it vertically to a 32 x 27 tensor.</p>
 <div class="admonition note">
@@ -1305,9 +1280,9 @@ b2              | exact: True  | approximate: True  | maxdiff: 0.0
 </div>
 </section>
 <section id="layer-1">
-<h3>Layer 1<a class="headerlink" href="#layer-1" title="Permalink to this heading">#</a></h3>
+<h4>Layer 1<a class="headerlink" href="#layer-1" title="Permalink to this heading">#</a></h4>
 <section id="non-linearity">
-<h4>Non-linearity<a class="headerlink" href="#non-linearity" title="Permalink to this heading">#</a></h4>
+<h5>Non-linearity<a class="headerlink" href="#non-linearity" title="Permalink to this heading">#</a></h5>
 <p><strong>d_h_pre_act</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">h</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">h_pre_act</span><span class="p">)</span>
 </pre></div>
@@ -1329,7 +1304,7 @@ b2              | exact: True  | approximate: True  | maxdiff: 0.0
 </div>
 </section>
 <section id="batch-norm">
-<h4>Batch norm<a class="headerlink" href="#batch-norm" title="Permalink to this heading">#</a></h4>
+<h5>Batch norm<a class="headerlink" href="#batch-norm" title="Permalink to this heading">#</a></h5>
 <p><strong>d_bn_gain</strong>, <strong>d_bn_raw</strong>, <strong>d_bn_bias</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">h_pre_act</span> <span class="o">=</span> <span class="n">bn_gain</span> <span class="o">*</span> <span class="n">bn_raw</span> <span class="o">+</span> <span class="n">bn_bias</span>
 </pre></div>
@@ -1399,12 +1374,8 @@ bn_bias         | exact: False | approximate: True  | maxdiff: 1.862645149230957
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">bn_var</span> <span class="o">=</span> <span class="n">bn_diff2</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">bs</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
-</section>
-</section>
-</section>
 <hr class="docutils" />
-<section id="toy-example-begin-align-begin-bmatrix-a-11-a-12-a-21-a-22-end-bmatrix-begin-bmatrix-b-1-b-2-end-bmatrix-begin-bmatrix-a-11-a-12-bs-1-a-21-a-22-bs-1-end-bmatrix-end-align">
-<h2>Toy example:
+<p>Toy example:
 $<span class="math notranslate nohighlight">\(
 \begin{align*}
   \begin{bmatrix}
@@ -1418,7 +1389,8 @@ $<span class="math notranslate nohighlight">\(
     (a_{11} + a_{12})/(bs-1) &amp;  (a_{21} + a_{22})/(bs-1)
   \end{bmatrix}
 \end{align*}
-\)</span>$<a class="headerlink" href="#toy-example-begin-align-begin-bmatrix-a-11-a-12-a-21-a-22-end-bmatrix-begin-bmatrix-b-1-b-2-end-bmatrix-begin-bmatrix-a-11-a-12-bs-1-a-21-a-22-bs-1-end-bmatrix-end-align" title="Permalink to this heading">#</a></h2>
+\)</span>$</p>
+<hr class="docutils" />
 <p><code class="docutils literal notranslate"><span class="pre">bn_diff2</span></code> is a 32 x 64 tensor, <code class="docutils literal notranslate"><span class="pre">bn_var</span></code> is a 1 x 64 tensor.
 The tensor <code class="docutils literal notranslate"><span class="pre">bn_diff2</span></code> is summed in the forward pass, therefore we have to replicate the gradients in the backward pass.</p>
 <div class="cell docutils container">
@@ -1497,8 +1469,9 @@ The tensor <code class="docutils literal notranslate"><span class="pre">bn_diff2
 </div>
 </div>
 </div>
+</section>
 <section id="pre-batch-norm">
-<h3>Pre-batch norm<a class="headerlink" href="#pre-batch-norm" title="Permalink to this heading">#</a></h3>
+<h5>Pre-batch norm<a class="headerlink" href="#pre-batch-norm" title="Permalink to this heading">#</a></h5>
 <p><strong>d_emb_cat</strong>, <strong>d_W1</strong>, <strong>d_b1</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">h_pre_bn</span> <span class="o">=</span> <span class="n">emb_cat</span> <span class="o">@</span> <span class="n">W1</span> <span class="o">+</span> <span class="n">b1</span>
 </pre></div>
@@ -1524,6 +1497,8 @@ b1              | exact: False | approximate: True  | maxdiff: 2.793967723846435
 </div>
 </div>
 </div>
+</section>
+</section>
 </section>
 <section id="embedding-layer">
 <h3>Embedding layer<a class="headerlink" href="#embedding-layer" title="Permalink to this heading">#</a></h3>
@@ -1713,14 +1688,16 @@ p_i &amp;= \frac{e^{l_i}}{\sum_j e^{l_j}}\\
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{align*}
-\frac{d}{dl_i}loss = \frac{d}{dl_i}(-log\frac{e^{l_y}}{\sum_j e^{l_j}})\\
-\end{align*}
-using ${\large\frac{d}{dx}}log(x) =\large\frac{1}{x}$  
-\begin{align*}
-&amp; = -\frac{\sum_j e^{l_j}}{e^{l_y}}\frac{d}{dl_i}(\frac{e^{l_y}}{\sum_j e^{l_j}}) \\
-&amp; = -\frac{\sum_j{e^{l_j}}}{e^{l_y}} {\left[\frac{e^{l_y}}{\sum_j e^{l_j}} -\frac{e^{l_y}e^{l_i}}{(\sum_j e^{l_j})^2} \right]}\\
+  \frac{d}{dl_i}loss = \frac{d}{dl_i}(-log\frac{e^{l_y}}{\sum_j e^{l_j}})\\
 \end{align*}
 \end{split}\]</div>
+<p>using <span class="math notranslate nohighlight">\({\large\frac{d}{dx}}log(x) =\large\frac{1}{x}\)</span><br />
+$<span class="math notranslate nohighlight">\(
+\begin{align*}
+  &amp; = -\frac{\sum_j e^{l_j}}{e^{l_y}}\frac{d}{dl_i}(\frac{e^{l_y}}{\sum_j e^{l_j}}) \\
+  &amp; = -\frac{\sum_j{e^{l_j}}}{e^{l_y}} {\left[\frac{e^{l_y}}{\sum_j e^{l_j}} -\frac{e^{l_y}e^{l_i}}{(\sum_j e^{l_j})^2} \right]}\\
+\end{align*}
+\)</span>$</p>
 <p>if <span class="math notranslate nohighlight">\(i \neq y\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -1952,20 +1929,21 @@ The <span class="math notranslate nohighlight">\(i\)</span> components of <span 
 \end{split}\]</div>
 <p>(4)</p>
 <div class="math notranslate nohighlight">
-\[ \begin{align}\begin{aligned}\begin{split}
+\[\begin{split}
 \begin{align*}
-\frac{\delta L}{\delta x_i} &amp;= \frac{\delta \hat{x_i}}{\delta x_i}\frac{\delta L}{\delta \hat{x_i}} + \frac{\delta \mu}{\delta x_i}\frac{\delta L}{\delta \mu} + \frac{\delta \sigma^2}{\delta x_i}\frac{\delta L}{\delta \sigma^2}\\\\
-\frac{\delta \hat{x_i}}{\delta x_i} &amp;= \frac{\delta}{\delta x_i}\left[\frac{x_i-\mu}{\sqrt{\sigma^2+\epsilon}}\right]\\
-&amp;= \frac{1}{\sqrt{\sigma^2+\epsilon}}\\\\
-\frac{\delta \mu}{\delta x_i} &amp;= \frac{\delta}{\delta x_i}\left[\frac{1}{m}\sum_{i}x_i\right]\\
-&amp;= \frac{1}{m}\\\\
-\frac{\delta \sigma^2}{\delta x_i} &amp;= \frac{\delta}{\delta x_i}\left[\frac{1}{m-1}\sum_{i}(x_i-\mu)^2\right]\\
-&amp;= \frac{2}{m-1}(x_i-\mu)\\\\\end{split}\\\begin{split}\Rightarrow\frac{\delta L}{\delta x_i} &amp;= \frac{1}{\sqrt{\sigma^2+\epsilon}}\frac{\delta L}{\delta \hat{y_i}}*\gamma + \left[-\frac{1}{m}\frac{\gamma}{\sqrt{\sigma^2+\epsilon}}\sum_{j}\frac{\delta L}{\delta y_j}\right] + \left[\frac{2}{m-1}(x_i-\mu)\right]\left[-\frac{1}{2}\gamma\sum_{j}\frac{\delta L}{\delta y_j}\frac{x_j-\mu}{(\sigma^2+\epsilon)^{\frac{3}{2}}}\right]\\
-&amp;= \frac{1}{\sqrt{\sigma^2+\epsilon}}\frac{\delta L}{\delta \hat{y_i}}*\gamma - \left[\frac{1}{m}\frac{\gamma}{\sqrt{\sigma^2+\epsilon}}\sum_{j}\frac{\delta L}{\delta y_j}\right] - \left[\frac{1}{m-1}\frac{x_i-\mu}{\sqrt{\sigma^2+\epsilon}}\right]\left[\frac{\gamma}{\sqrt{\sigma^2+\epsilon}}\sum_{j}\frac{\delta L}{\delta y_j}\frac{x_j-\mu}{\sqrt{\sigma^2+\epsilon}}\right]\\
-\left(\textsf{because }\small\hat{x_i}=\frac{x_i-\mu}{\sqrt{\sigma^2+\epsilon}}\right)\\
-&amp;= \frac{\gamma}{m\sqrt{\sigma^2+\epsilon}}\left[m\frac{\delta L}{\delta y_i}-\sum_{j}\frac{\delta L}{\delta y_j}-\frac{m}{m-1}\hat{x_i}\sum_{j}\frac{\delta L}{\delta y_j}\hat{x_j}\right]\\
+  \frac{\delta L}{\delta x_i} &amp;= \frac{\delta \hat{x_i}}{\delta x_i}\frac{\delta L}{\delta \hat{x_i}} + \frac{\delta \mu}{\delta x_i}\frac{\delta L}{\delta \mu} + \frac{\delta \sigma^2}{\delta x_i}\frac{\delta L}{\delta \sigma^2}\\\\
+  \frac{\delta \hat{x_i}}{\delta x_i} &amp;= \frac{\delta}{\delta x_i}\left[\frac{x_i-\mu}{\sqrt{\sigma^2+\epsilon}}\right]\\
+  &amp;= \frac{1}{\sqrt{\sigma^2+\epsilon}}\\\\
+  \frac{\delta \mu}{\delta x_i} &amp;= \frac{\delta}{\delta x_i}\left[\frac{1}{m}\sum_{i}x_i\right]\\
+  &amp;= \frac{1}{m}\\\\
+  \frac{\delta \sigma^2}{\delta x_i} &amp;= \frac{\delta}{\delta x_i}\left[\frac{1}{m-1}\sum_{i}(x_i-\mu)^2\right]\\
+  &amp;= \frac{2}{m-1}(x_i-\mu)\\\\
+  \Rightarrow\frac{\delta L}{\delta x_i} &amp;= \frac{1}{\sqrt{\sigma^2+\epsilon}}\frac{\delta L}{\delta \hat{y_i}}*\gamma + \left[-\frac{1}{m}\frac{\gamma}{\sqrt{\sigma^2+\epsilon}}\sum_{j}\frac{\delta L}{\delta y_j}\right] + \left[\frac{2}{m-1}(x_i-\mu)\right]\left[-\frac{1}{2}\gamma\sum_{j}\frac{\delta L}{\delta y_j}\frac{x_j-\mu}{(\sigma^2+\epsilon)^{\frac{3}{2}}}\right]\\
+  &amp;= \frac{1}{\sqrt{\sigma^2+\epsilon}}\frac{\delta L}{\delta \hat{y_i}}*\gamma - \left[\frac{1}{m}\frac{\gamma}{\sqrt{\sigma^2+\epsilon}}\sum_{j}\frac{\delta L}{\delta y_j}\right] - \left[\frac{1}{m-1}\frac{x_i-\mu}{\sqrt{\sigma^2+\epsilon}}\right]\left[\frac{\gamma}{\sqrt{\sigma^2+\epsilon}}\sum_{j}\frac{\delta L}{\delta y_j}\frac{x_j-\mu}{\sqrt{\sigma^2+\epsilon}}\right]\\
+  \left(\textsf{because }\small\hat{x_i}=\frac{x_i-\mu}{\sqrt{\sigma^2+\epsilon}}\right)\\
+  &amp;= \frac{\gamma}{m\sqrt{\sigma^2+\epsilon}}\left[m\frac{\delta L}{\delta y_i}-\sum_{j}\frac{\delta L}{\delta y_j}-\frac{m}{m-1}\hat{x_i}\sum_{j}\frac{\delta L}{\delta y_j}\hat{x_j}\right]\\
 \end{align*}
-\end{split}\end{aligned}\end{align} \]</div>
+\end{split}\]</div>
 <p>The formula for <span class="math notranslate nohighlight">\(\large\frac{\delta L}{\delta x_i}\)</span> is for a single neuron and a batch of 32 samples.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2329,44 +2307,15 @@ azhil.
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pytorch-backward-pass">Pytorch backward pass</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#manual-backward-pass">Manual backward pass</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-entropy-loss">Cross entropy loss</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#layer-2">Layer 2</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#layer-1">Layer 1</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#non-linearity">Non-linearity</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#batch-norm">Batch norm</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-batch-norm">Pre-batch norm</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-derivative-is-the-sum-of-the-derivatives-of-the-3-branches-begin-align-begin-bmatrix-a-11-a-21-a-31-a-21-a-22-a-32-a-31-a-23-a-33-end-bmatrix-end-align">The derivative is the sum of the derivatives of the 3 branches:
-$<span class="math notranslate nohighlight">\(
-\begin{align*}
-  \begin{bmatrix}
-    a_{11} + a_{21} + a_{31}\\
-    a_{21} + a_{22} + a_{32}\\
-    a_{31} + a_{23} + a_{33}    
-  \end{bmatrix}
-\end{align*}
-\)</span>$</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#layer-2">Layer 2</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#layer-1">Layer 1</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#non-linearity">Non-linearity</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#batch-norm">Batch norm</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#toy-example-begin-align-begin-bmatrix-a-11-a-12-a-21-a-22-end-bmatrix-begin-bmatrix-b-1-b-2-end-bmatrix-begin-bmatrix-a-11-a-12-bs-1-a-21-a-22-bs-1-end-bmatrix-end-align">Toy example:
-$<span class="math notranslate nohighlight">\(
-\begin{align*}
-  \begin{bmatrix}
-    a_{11} &amp; a_{12}\\
-    a_{21} &amp; a_{22}
-  \end{bmatrix} -&gt;
-  \begin{bmatrix}
-    b_1 &amp; b_2
-  \end{bmatrix} =
-  \begin{bmatrix}
-    (a_{11} + a_{12})/(bs-1) &amp;  (a_{21} + a_{22})/(bs-1)
-  \end{bmatrix}
-\end{align*}
-\)</span>$</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-batch-norm">Pre-batch norm</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#embedding-layer">Embedding layer</a></li>
 </ul>
 </li>
