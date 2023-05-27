@@ -5,6 +5,7 @@ format: jb-book
 root: intro
 parts:
 
+<<<<<<< HEAD
 # - caption: DEFAULT JB FILES
 #   chapters:
 #   - file: docs/markdown
@@ -12,11 +13,22 @@ parts:
 #   - file: docs/markdown-notebooks
 
 - caption: BUILD A LANGUAGE MODEL
+=======
+
+- caption: BUILDING A LANGUAGE MODEL
+>>>>>>> ab7ee450b4d2373c72fe456c75805ddbbe3a19e1
   chapters:
   - file: docs/build_language_model/0_intro
   - file: docs/build_language_model/1_bigrams
   - file: docs/build_language_model/2_mlp
+<<<<<<< HEAD
   - file: docs/build_language_model/3_activations_gradients_batchnorm
+=======
+  - file: docs/build_language_model/3.1_activations_gradients_batchnorm
+  - file: docs/build_language_model/3.2_activations_gradients_batchnorm
+  - file: docs/build_language_model/4_backprop
+  - file: docs/build_language_model/5_wavenet
+>>>>>>> ab7ee450b4d2373c72fe456c75805ddbbe3a19e1
   # - file: docs/build_language_model/test_plotly
 
 
