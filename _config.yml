@@ -6,7 +6,7 @@ author: Marc Dumon
 logo: logo.png
 
 # Patterns to skip when building the book. Can be glob-style (e.g. "*skip.ipynb")
-exclude_patterns            : [_build, Thumbs.db, .DS_Store, "**.ipynb_checkpoints"]
+exclude_patterns: [_build, Thumbs.db, .DS_Store, "**.ipynb_checkpoints"]
 # Auto-exclude files not in the toc
 only_build_toc_files: true
 
@@ -52,14 +52,13 @@ html:
   use_multitoc_numbering    : true   # Continuous numbering across parts/chapters
   extra_navbar              : ""  # Will be displayed underneath the left navbar.
   extra_footer              : ""  # Will be displayed underneath the footer.
-  google_analytics_id       : ""  # A GA id that can be used to track book views.
   home_page_in_navbar       : true  # Whether to include your home page in the left Navigation Bar
   baseurl                   : ""  # The base URL where your book will be hosted. Used for creating image previews and social links. e.g.: https://mypage.com/mybook/
   comments:
     hypothesis              : false
     utterances              : false
   announcement              : "" # A banner announcement at the top of the site.
-  google_analytics_id       : G-MSZJYDCNQ4
+  google_analytics_id       : G-MSZJYDCNQ4 # A GA id that can be used to track book views.
 
 sphinx:
   config:
