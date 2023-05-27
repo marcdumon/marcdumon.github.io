@@ -4,7 +4,11 @@
 ## Setup
 - git:
     ````bash
+<<<<<<< HEAD
+    git remote add origin https://github.com/marcdumon/test_jupyter_book
+=======
     git remote add origin https://github.com/marcdumon/marcdumon.github.io.git
+>>>>>>> ab7ee450b4d2373c72fe456c75805ddbbe3a19e1
     ````
 - Notebook tags:
   See: [myst-cheatsheet-code-cell-tags](https://jupyterbook.org/en/stable/reference/cheatsheet.html#myst-cheatsheet-code-cell-tags)

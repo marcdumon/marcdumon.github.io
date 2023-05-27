@@ -3,6 +3,11 @@ p {
 }
 
 .container, .container-lg, .container-md, .container-sm, .container-xl {
+<<<<<<< HEAD
+    max-width: 1500px;
+}
+=======
     max-width: 15000px;
 }
 
+>>>>>>> ab7ee450b4d2373c72fe456c75805ddbbe3a19e1
