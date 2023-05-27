@@ -1,12 +1,7 @@
 # Book settings
 # Learn more at https://jupyterbook.org/customize/config.html
 
-<<<<<<< HEAD
 title: Machine Learning
-=======
-title: Marc Dumon's homepage
-description: Machine Learning
->>>>>>> ab7ee450b4d2373c72fe456c75805ddbbe3a19e1
 author: Marc Dumon
 logo: logo.png
 
@@ -64,10 +59,7 @@ html:
     hypothesis              : false
     utterances              : false
   announcement              : "" # A banner announcement at the top of the site.
-<<<<<<< HEAD
-=======
   google_analytics_id       : G-MSZJYDCNQ4
->>>>>>> ab7ee450b4d2373c72fe456c75805ddbbe3a19e1
 
 sphinx:
   config:
