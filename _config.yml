@@ -27,12 +27,6 @@ latex:
 bibtex_bibfiles:
   - references.bib
 
-# source: https://clh0524.medium.com/switch-your-jekyll-blog-to-google-analytics-4-simplified-8704d23d9cf9
-plugins:
-  - jekyll-remote-theme
-
-remote_theme: jekyll/minima
-
 
 # Launch button settings
 launch_buttons:
