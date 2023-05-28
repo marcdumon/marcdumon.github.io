@@ -27,6 +27,12 @@ latex:
 bibtex_bibfiles:
   - references.bib
 
+# source: https://clh0524.medium.com/switch-your-jekyll-blog-to-google-analytics-4-simplified-8704d23d9cf9
+remote_theme: jekyll/minima
+plugins:
+  - jekyll-remote-theme
+
+
 # Launch button settings
 launch_buttons:
   notebook_interface        : classic  # The interface interactive links will activate ["classic", "jupyterlab"]
