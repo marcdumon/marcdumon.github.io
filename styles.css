@@ -1,0 +1,7 @@
+/* css styles */
+
+/* cells tagged output_scroll: limit the output height */
+.cell[data-tags*="output_scroll"] .cell-output {
+  max-height: 400px;
+  overflow-y: auto;
+}

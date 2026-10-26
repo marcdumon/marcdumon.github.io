@@ -1,0 +1,45 @@
+---
+title: "Makemore 0: Introduction"
+date: "2023-01-21"
+categories: [machine learning, pytorch, makemore]
+---
+
+The notebooks are my notes taken when following the course by **Andrej Karpathy** on neural networks and language modelling. This course starts all the way at the basics. We implement a bigram character-level language model, which we will further complexify into a modern Transformer language model, like GPT.
+
+## Lecture 1: Building makemore
+
+Notebook: [Makemore 1: Bigram Language Model](../2023-01-21-makemore-1-bigrams/index.ipynb)
+
+In this video, the focus is on (1) introducing torch.Tensor and its subtleties and use in efficiently evaluating neural networks and (2) the overall framework of language modeling that includes model training, sampling, and the evaluation of a loss (e.g. the negative log likelihood for classification).
+
+{{< video https://www.youtube.com/embed/PaCmpygFfXo >}}
+
+## Lecture 2: MLP
+
+Notebook: [Makemore 2: Multilayer Perceptron](../2023-01-21-makemore-2-mlp/index.ipynb)
+
+We implement a multilayer perceptron (MLP) character-level language model. In this video we also introduce many basics of machine learning (e.g. model training, learning rate tuning, hyperparameters, evaluation, train/dev/test splits, under/overfitting, etc.).
+
+{{< video https://www.youtube.com/embed/TCH_1BHY58I >}}
+
+## Lecture 3: Activations & Gradients, BatchNorm
+
+Notebooks: [Makemore 3.1](../2023-05-26-makemore-3-1-activations-gradients-batchnorm/index.ipynb) and [Makemore 3.2](../2023-05-26-makemore-3-2-activations-gradients-batchnorm/index.ipynb)
+
+We dive into some of the internals of MLPs with multiple layers and scrutinize the statistics of the forward pass activations, backward pass gradients, and some of the pitfalls when they are improperly scaled. We also look at the typical diagnostic tools and visualizations you'd want to use to understand the health of your deep network. We learn why training deep neural nets can be fragile and introduce the first modern innovation that made doing so much easier: Batch Normalization.
+
+{{< video https://www.youtube.com/embed/P6sfmUTpUmc >}}
+
+## Lecture 4: Becoming a Backprop Ninja
+
+Notebook: [Makemore 4: Backpropagation](../2023-05-26-makemore-4-backprop/index.ipynb)
+
+We take the 2-layer MLP (with BatchNorm) from the previous video and backpropagate through it manually without using PyTorch autograd's loss.backward(). That is, we backprop through the cross entropy loss, 2nd linear layer, tanh, batchnorm, 1st linear layer, and the embedding table. Along the way, we get an intuitive understanding about how gradients flow backwards through the compute graph and on the level of efficient Tensors, not just individual scalars like in micrograd. This helps build competence and intuition around how neural nets are optimized and sets you up to more confidently innovate on and debug modern neural networks.
+
+{{< video https://www.youtube.com/embed/q8SA3rM6ckI >}}
+
+## Lecture 5: Building a WaveNet
+
+Notebook: [Makemore 5: Wavenet](../2023-05-26-makemore-5-wavenet/index.ipynb)
+
+{{< video https://www.youtube.com/embed/t3YJ5hKiMQ0 >}}

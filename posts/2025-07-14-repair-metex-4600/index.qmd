@@ -1,0 +1,260 @@
+---
+title: "Repair Log: Metex 4600 Multimeter"
+date: "2025-07-14"
+categories: [electronics, repair]
+image: media/2025-08-15_23.20.41.jpg
+lightbox: true
+---
+## Introduction
+I have a Metex 4600 multimeter whose continuity buzzer has been broken for years (probably due to a design flaw explained later). I finally decided to repair it. While the meter’s value is only about €10, this project was a fun way to pick up electronics after many decades.
+
+## Schematics
+
+No official schematics for the Metex 4600 were found. The closest reference is the Metex 3630, which adds frequency and capacitance measurement but uses identical buzzer-related components: IC2 (ADC-HD01) and IC3 (CAC-HD02A).  
+[Metex 3630 Schematic](https://elektrotanya.com/PREVIEWS/38933510/23432455/metex/metex_m3630_sch.pdf_1.png)
+
+- **Buzzer Details**  
+
+::: {layout-ncol=2}
+![](media/Pasted_image_20250714201035.png){group="g1"}
+
+![](media/Pasted_image_20250714201100.png){group="g1"}
+:::
+
+    
+
+
+***
+
+
+## Dismantling
+
+
+::: {layout-ncol=3}
+![](media/2025-08-15_22.11.40_1.jpg){group="g2"}
+
+![](media/2025-08-15_22.13.06_1.jpg){group="g2"}
+
+![](media/2025-08-15_22.13.18_1.jpg){group="g2"}
+
+![](media/2025-08-15_22.14.44_1.jpg){group="g2"}
+
+![](media/2025-08-15_22.14.57_1.jpg){group="g2"}
+
+![](media/2025-08-15_23.20.41.jpg){group="g2"}
+
+![](media/2025-08-15_23.44.53.jpg){group="g2"}
+:::
+
+
+
+***
+
+
+## Troubleshooting Summary
+
+- Substitution with AT-1220-TT-R → no audible output.
+- With buzzer removed, CAC-HD02A pins 3–4 = 0 V (AC+DC), independent of lead state. Pin 2 control logic correct: 0.6 V open, 8.6 V closed. Continuity LED functional.
+- Removing CAC-HD02A increased LED brightness when shorted, suggesting faulty load removal.
+
+**Conclusion:** CAC-HD02A is defective and the primary cause of buzzer failure.
+
+
+***
+
+
+## Reverse Engineering CAC-HD02A
+
+### Disassembly
+
+
+![](media/Pasted_image_20250816190926.png){group="g3"}
+
+
+
+The CAC-HD02 A module exposes five pins:
+
+- Pin 1: V− (ground reference)
+- Pin 2: Logic/control input; measured at ≈0.6 V (leads open) and ≈8.6 V (leads closed)
+- Pin 3: Buzzer drive terminal
+- Pin 4: Buzzer drive terminal, tied internally to V+
+- Pin 5: V+ (supply rail)
+
+When the control input (pin 2) is asserted high (~8.6 V), the module generates a periodic waveform on the buzzer drive pins (pins 3–4). We assume that the signal has an amplitude of approximately 3 V, a rectangular waveform, and a frequency near 2 kHz. This signal is sufficient to excite the passive piezoelectric transducer (AT-1220-TT-R), resulting in audible acoustic output. In the inactive state (pin 2 low), the buzzer drive pins remain quiescent.
+
+The next step is to expose the circuitry by softening or removing the encapsulant. Acetone should weaken the package enough to reveal the die and passive components, allowing us to confirm what the IC actually is and how the oscillator is implemented.
+
+
+::: {layout-ncol=2}
+![](media/2025-08-17_07.13.17.jpg){group="g4"}
+
+![](media/2025-08-17_07.12.14.jpg){group="g4"}
+:::
+
+ After ~4h @ 50C
+
+::: {layout-ncol=3}
+![](media/2025-08-17_07.16.15.jpg){group="g5"}
+
+![](media/2025-08-17_07.17.35.jpg){group="g5"}
+
+![](media/2025-08-17_07.20.15.jpg){group="g5"}
+:::
+
+
+
+
+
+
+
+::: {layout-ncol=2}
+![](media/IMG0817_020.jpg){group="g6"}
+
+![](media/IMG0817_034.jpg){group="g6"}
+:::
+
+
+
+::: {layout-ncol=2}
+![](media/IMG0817_037.jpg){group="g7"}
+
+![](media/IMG0817_038.jpg){group="g7"}
+:::
+
+
+### Identified Components
+
+- IC1: NJU4011 Quad NAND
+- Tr1: NPN transistor
+- R1: 1 MΩ
+- R2: 2 MΩ
+- R3: 200 Ω
+- C1: 260 pF
+- C2: 100 nF
+
+***
+
+
+### Reconstructed Schematic
+Tracing the PCB shows which IC pins connect to the transistor, resistors, and capacitors. From these connections and the measured values we can reconstruct the schematic.
+
+
+![](media/Pasted_image_20250821112323.png){group="g8"}
+
+
+
+***
+
+
+### Sanity Checks
+
+#### Buzzer voltage
+
+![](media/Pasted_image_20250821114730.png){group="g9"}
+
+
+When gate A (pin 3) outputs a high signal, the current through the buzzer is
+$$\frac{9V}{200\Omega+50\Omega}=36\text{mA}$$
+resulting in a voltage across the buzzer of
+$$50\Omega*36\text{mA}=1.8V$$
+This lies comfortably within the 1–3 V operating range of the AT-1220-TT-R buzzer.
+
+#### Oscillator frequency
+Concider following oscillator subcircuit:
+
+![](media/Pasted_image_20250821133105.png){group="g10"}
+
+
+When input 6 is low, output 4 remains high, preventing oscillation. When input 6 is high, gate U1B functions as an inverter for input 5: a high input 5 yields a low output 4, while a low input 5 produces a high output 4.
+
+This three-NAND-gate configuration is functionally equivalent to the NOT-gate oscillator described in [Application Note 118: CMOS Oscillators](https://forum.allaboutcircuits.com/attachments/an-118-pdf.173301/). 
+
+![](media/Pasted_image_20250821133736.png){group="g11"}
+
+The oscillating frequency is given by the following formula:
+$$\large f\simeq\frac{1}{2R_1C(\frac{0.405R_2}{R_1+R_2}+0.693)}$$
+Substituting the component values gives
+$$\large f\simeq\frac{1}{2*1*10^6*260*10^{-12}(\frac{0.405*2*10^6}{1*10^6+2*10^6}+0.693)}=1.997 \text{Hz}$$
+This matches the expected oscillator frequency.
+
+The schematic has passed preliminary sanity checks; the next step is to construct the circuit on a breadboard to verify its performance experimentally.
+
+## Prototyping & Breadboard Verification
+
+
+::: {layout-ncol=2}
+![](media/2025-08-21_16.01.15.jpg){group="g12"}
+
+![](media/2025-08-21_16.01.21.jpg){group="g12"}
+:::
+
+
+The oscillator produced a ≈1.75 kHz square wave. 
+
+<span style="color:rgb(255, 0, 0)">The original design lacked a base resistor, causing transistor and CD4011 to overheat!.</span> Adding a 2.2 kΩ series base resistor stabilized the circuit.  
+
+![](media/Pasted_image_20250821212531.png){group="g13"}
+
+
+
+![](media/2025-08-21_20.37.18.jpg){width=300px group="g14"}
+
+
+The buzzer tone was restored, and continuity detection now functions reliably.
+
+
+***
+
+
+## Final Assembly & Integration
+
+
+::: {layout-ncol=3}
+![](media/2025-08-22_15.27.25.jpg){group="g15"}
+
+![](media/2025-08-22_15.37.08.jpg){group="g15"}
+
+![](media/2025-08-22_21.02.47.jpg){group="g15"}
+
+![](media/2025-08-22_21.27.02.jpg){group="g15"}
+
+![](media/2025-08-22_21.27.35.jpg){group="g15"}
+
+![](media/2025-08-22_21.40.33.jpg){group="g15"}
+
+![](media/2025-08-22_21.40.55.jpg){group="g15"}
+
+![](media/2025-08-22_22.18.50.jpg){group="g15"}
+:::
+
+
+{{< video media/20250822_223547.mp4 >}}
+
+
+
+***
+
+
+## Cost of Repair
+| Component                    | Qty | Unit Price | Total         |
+| ---------------------------- | --- | ---------- | ------------- |
+| CD4011BM NAND IC             | 1   | $1.09      | $1.09         |
+| Resistors (2%)               | 3   | $0.10      | $0.30         |
+| Ceramic capacitors           | 2   | $0.40      | $0.80         |
+| NPN transistor               | 1   | $0.14      | $0.14         |
+| SOIC-14 breakout PCB         | 1   | $1.30      | $1.30         |
+| **Parts Subtotal**           |     |            | **$3.63**     |
+| Working hours _(12 h @ €/h)_ |     |            | **$1,200.00** |
+| **Total Effective Cost**     |     |            | **$1,203.63** |
+
+### Economic Assessment
+
+The market value of a used Metex 4600 multimeter is approximately $10. The effective repair cost, when accounting for labor, is ~$1,204, making the process economically irrational from a purely financial perspective. However, the repair provided significant learning value:
+
+- Reverse engineering of a proprietary IC (CAC-HD02A)
+- Design flaw identification and correction
+- Validation of the oscillator’s operation through theoretical and experimental analysis
+- Full restoration of buzzer functionality
+
+
+***
